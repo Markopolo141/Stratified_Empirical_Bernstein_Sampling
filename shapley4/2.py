@@ -194,7 +194,7 @@ def approshapley(N,m,v):
 	while(samples<m):
 		v_new = v(vector[0:i+1])
 		mm[vector[i]] += v_new-v_old
-		v_new=v_old
+		v_old=v_new
 		n[vector[i]]+=1
 		i+=1
 		samples += 1

@@ -182,6 +182,29 @@ def maleki(N,m,v):
 		ss[i] /= N
 	return ss
 
+def approshapley(N,m,v):
+	mm = [0 for i in range(N)]
+	n = [0 for i in range(N)]
+	samples = 0
+	i=0
+	vector = list(range(N))
+	shuffle(vector)
+	v_zero = v([])
+	v_old = v_zero
+	while(samples<m):
+		v_new = v(vector[0:ii+1])
+		mm[i] += v_new-v_old
+		v_new=v_old
+		n[i]+=1
+		i+=1
+		samples += 1
+		if (i>=N):
+			i=0
+			v_old=v_zero
+			vector = list(range(N))
+			shuffle(vector)
+	return [mm[i]*1.0/n[i] if n[i]>0 else 0 for i in range(N)]
+
 
 def simple(N,m,v):
 	mm = [[0 for i in range(N)] for ii in range(N)]
@@ -382,6 +405,9 @@ for m in [N*N*10,N*N*50,N*N*100,N*N*500,N*N*1000]:
 for m in [N*N*10,N*N*50,N*N*100,N*N*500,N*N*1000]:
 	print "calculating Simple for {}".format(m)
 	print sample_error(simple, 40, N,m,v)
+for m in [N*N*10,N*N*50,N*N*100,N*N*500,N*N*1000]:
+	print "calculating ApproShapley for {}".format(m)
+	print sample_error(approshapley, 40, N,m,v)
 #for m in [N*N*10,N*N*50,N*N*100,N*N*500,N*N*1000]:
 #	print "calculating SimpleSimple for {}".format(m)
 #	print sample_error(simple_simple, 40, N,m,v)

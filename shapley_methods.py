@@ -138,11 +138,6 @@ def castro(N,m,v):
 				s[l][i] += x0
 			s[l][i] = s[l][i]*1.0/(var[l][i]+m1exp)
 
-	'''for o in range(N):
-		for i in range(N):
-			print "{}\t".format(m1exp+var[i][o]),
-		print ""'''
-
 	ss = [0.0 for i in range(N)]
 	for l in range(N):
 		for i in range(N):
@@ -237,11 +232,6 @@ def simple_simple(N,m,v):
 		l = randint(0,N-1)
 		s[l][i] += gen2(l,i,N,v)
 		n[l][i] += 1
-
-	'''for o in range(N):
-		for i in range(N):
-			print "{}\t".format(n[i][o]),
-		print ""'''
 
 	ss = [0.0 for i in range(N)]
 	for l in range(N):

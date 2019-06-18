@@ -55,6 +55,8 @@ inline long shift(int b) {
 }
 
 
+// function returning a long composed of 'ticks' number of bits randomly flipped in the first 'length' of bits.
+// since longs count as coalitions, this function generates a random coalition of size ticks
 int* tick_data;
 unsigned long long gen_comb(int ticks, int length) {
 	for (int i=0; i < ticks; i++) {
@@ -84,8 +86,8 @@ unsigned long long gen_comb(int ticks, int length) {
 
 
 
-// given a combination, find the 'next' combination in iterated and wrapped sequence.
-// WARNING: technically destroyed purity of random sampling of combinations
+// given a combination, find the 'next' combination in iterated and wrapped sequence. done by bit flipping
+// WARNING: technically destroyed purity of random sampling of combinations, only to be used sparingly when beginning to sample exhaustively without replacement
 unsigned long long iterate_comb(unsigned long long comb, int length) {
 	bool trigger = false;
 	unsigned long long comb2 = comb;
@@ -110,7 +112,8 @@ unsigned long long iterate_comb(unsigned long long comb, int length) {
 
 
 
-
+// tries to generate a unique coalition that hasnt been seen before
+// after 10 tries it reverts to 'iterate_comb' for expediency
 unsigned long long gen_new_comb(int ticks, int length, unsigned long long* combs, int* combs_length, int combs_max_length) {
 	unsigned long long v;
 	bool in_list= true;
@@ -144,7 +147,8 @@ unsigned long long gen_new_comb(int ticks, int length, unsigned long long* combs
 
 
 
-
+// samples a random coalition of size l without replacement and 
+// calculates the marginal contribution of adding player i
 double gen3(int l, int i, int N, unsigned long long* combs, int* combs_length, int combs_max_length) {
 	unsigned long long vv = gen_new_comb(l, N-1, combs, combs_length, combs_max_length);
 	unsigned long long v1 = vv%shift(i);
@@ -157,7 +161,13 @@ double gen3(int l, int i, int N, unsigned long long* combs, int* combs_length, i
 
 
 
-
+// the SEBB (assuming sampling without replacement). the bound which the SEBM seeks to iteratively minimize.
+// N is the number of strata
+// ni is the amount that each strata is sampled
+// Ni is the sizes of the strata
+// var is the sample variances of the strata
+// d is the population data width
+// r is the confidence level
 inline double OmegaBig(long n, long N) {
 	return (n+1)*(1-n*1.0/N)*1.0/(n*n);
 }
@@ -170,12 +180,10 @@ inline double OmegaSmall(long n, long N) {
 inline double PsiSmall(long n, long N) {
 	return 1.0/n;
 }
-
 double* onN;
 double* max1;
 double* var1;
 double* d1;
-
 inline double burgess_bound(int N, long* ni, long* Ni, double* var, double d, double r) {
 	for (int i=0; i<N*2; i++) {
 		onN[i] = 0;
@@ -233,6 +241,11 @@ inline double burgess_bound(int N, long* ni, long* Ni, double* var, double d, do
 	return A;
 }
 
+// the SEBM (assuming sampling without replacement)
+// N is the number of strata
+// m is the sample budget
+// d is the data width
+// r is the confidence level
 double* burgess(int N, int m, double d, double r) {
 	long* ni = (long*)calloc(sizeof(long),N*N);
 	long* Ni = (long*)calloc(sizeof(long),N);
@@ -330,7 +343,7 @@ double* burgess(int N, int m, double d, double r) {
 
 
 
-
+// output computed data to file
 void file_output_data() {
 	char* filename;
 	filename = (char*)calloc(sizeof(char),150);
@@ -349,9 +362,7 @@ void file_output_data() {
 }
 
 
-
-
-
+// output computed data to screen
 void output_data() {
 	int n = max_counter*cores;
 	double v=0;
@@ -373,7 +384,8 @@ void output_data() {
 }
 
 
-
+// the main loop executed by each of the program multiprocesses
+// the parent coordinates the children
 void loop() {
 	int* command = &workspace[0];
 	int* state = &workspace[child+1];
@@ -422,7 +434,7 @@ void loop() {
 }
 
 
-
+// allocate needed memory
 void memory_allocate(char* key) {
 	tick_data = (int*)calloc(sizeof(int),N);
 	onN = (double*)calloc(sizeof(double),N*2);
@@ -434,6 +446,7 @@ void memory_allocate(char* key) {
 	resultspace = (double*)salloc(key,'z',sizeof(double)*cores*N,0666|IPC_CREAT);
 	workspace[0]=1;
 }
+// free all memory
 void memory_free() {
 	free(tick_data);
 	free(onN);
@@ -443,16 +456,20 @@ void memory_free() {
 	sfree(workspace);
 	sfree(resultspace);
 }
+// additional allocation of memory for parent
 void parent_memory_allocate() {
 	xs = (double*)calloc(sizeof(double),N*cores*max_counter);
 	xsum = (double*)calloc(sizeof(double),N);
 	x2sum = (double*)calloc(sizeof(double),N);
 }
+// additional frees of memory for parent
 void parent_memory_free() {
 	free(xs);
 	free(xsum);
 	free(x2sum);
 }
+
+// main function, forks as many children as there are processor cores and executes main loop
 int main(int argc, char *argv[]) {
 	memory_allocate(argv[0]);
 	m = N*N*atoi(argv[1]);

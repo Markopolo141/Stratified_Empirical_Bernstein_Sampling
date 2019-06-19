@@ -70,3 +70,4 @@ with open("Bernoulli_and_Uniform.csv","w") as f:
 print "Finished Experiment"
 
 
+

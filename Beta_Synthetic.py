@@ -17,7 +17,6 @@ try:
 except ImportError:
 	tqdm_enabled=False
 
-
 d=1.0 #data width is one for beta distribution
 
 print "Computing Beta data Experiment"
@@ -30,9 +29,8 @@ with open("Beta_Synthetic.csv","w") as f:
 	for mperN in [10,50,100,150]:
 		print mperN
 
-		#write a header in the csv
-		f.write("{} sample budget per strata\n".format(mperN))
-		f.write("SEBM*,SEBM,SEBM-W,simple,simple-w,Ney,Ney-W\n");
+		#data holding for the errors
+		sampling_errors = [[],[],[],[],[],[],[]]
 		
 		iterator = range(5000)
 		if tqdm_enabled:
@@ -61,31 +59,41 @@ with open("Beta_Synthetic.csv","w") as f:
 
 			#calculate error in using SEBM* method
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-burgess_ideal(cvals,m,d))))
+			sampling_errors[0].append(abs(mean-burgess_ideal(cvals,m,d)))
 
 			#calculate error in using SEBM method
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-burgess(cvals,m,d))))
+			sampling_errors[1].append(abs(mean-burgess(cvals,m,d)))
 
 			#calculate error in using SEBM method with replacement
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-burgess_small(cvals,m,d))))
+			sampling_errors[2].append(abs(mean-burgess_small(cvals,m,d)))
 
 			#calculate error in using simple sampling method without replacement
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-simple(cvals,m))))
+			sampling_errors[3].append(abs(mean-simple(cvals,m)))
 
 			#calculate error in using simple sampling method with replacement
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-simple_small(cvals,m))))
+			sampling_errors[4].append(abs(mean-simple_small(cvals,m)))
 
 			#calculate error in using Neyman sampling method with replacement
 			cvals = copy(vals)
-			f.write("{},".format(abs(mean-super_castro(cvals,m))))
+			sampling_errors[5].append(abs(mean-super_castro(cvals,m)))
 
 			#calculate error in using Neyman sampling method without replacement
 			cvals = copy(vals)
-			f.write("{}\n".format(abs(mean-super_castro_small(cvals,m))))
+			sampling_errors[6].append(abs(mean-super_castro_small(cvals,m)))
+
+		#sorting the sampling errors for quartile reporting
+		sampling_errors = [sorted(s) for s in sampling_errors]
+
+		#write csv entry, using rough quartile reporting
+		f.write("{} sample budget per strata\n".format(mperN))
+		f.write(",SEBM*,SEBM,SEBM-W,simple,simple-w,Ney,Ney-W\n")
+		for p in [0.09,0.25,0.5,0.75,0.91]:
+			pp = [p]+[s[int(len(s)*p)] for s in sampling_errors]
+			f.write("{} percentile,{},{},{},{},{},{},{}\n".format(*pp))
 
 print "Finished Experiment"
 

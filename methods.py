@@ -59,7 +59,7 @@ def super_castro_small(vals,m):
 	meanvals = [sum(vals[i])*1.0/len(vals[i]) for i in range(len(vals))]
 	varvals = [sum([(vals[i][o]-meanvals[i])**2 for o in range(len(vals[i]))])*1.0/len(vals[i]) for i in range(len(vals))]
 	samples = [1 for i in range(len(vals))]
-	new_samples = scale_array([varvals[i]*lengths[i] for i in range(len(vals))],m-sum(samples))
+	new_samples = scale_array([sqrt(varvals[i])*lengths[i] for i in range(len(vals))],m-sum(samples))
 	for i in range(len(samples)):
 		samples[i] += new_samples[i]
 	return sum([sum([choice(vals[i]) for ii in range(ss)])*len(vals[i])*1.0/ss for i,ss in enumerate(samples)])/sumN
@@ -80,7 +80,7 @@ def super_castro(vals,m):
 	allocated = sum(samples)
 
 	while allocated < m:
-		new_samples = scale_array([varvals[i]*lengths[i] for i in range(len(vals))],m-allocated)
+		new_samples = scale_array([sqrt(varvals[i])*lengths[i] for i in range(len(vals))],m-allocated)
 		for i in range(len(samples)):
 			if samples[i]+new_samples[i] >= len(vals[i]):
 				varvals[i]=0

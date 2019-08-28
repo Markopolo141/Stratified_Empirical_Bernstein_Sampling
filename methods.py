@@ -4,7 +4,6 @@
 # The Implementation of all the sampling methods used for the synthetic data experiments
 # and some utility functions
 
-
 from random import shuffle,choice
 from math import floor,factorial,log,sqrt
 
@@ -55,11 +54,12 @@ given the stratified data, computes the variance of the strata, and allocates sa
 computes the mean by sampling with replacement of thoes strata per thoes allocations
 '''
 def super_castro_small(vals,m):
+	lengths = [len(v) for v in vals]
 	sumN = sum([len(v) for v in vals])
 	meanvals = [sum(vals[i])*1.0/len(vals[i]) for i in range(len(vals))]
 	varvals = [sum([(vals[i][o]-meanvals[i])**2 for o in range(len(vals[i]))])*1.0/len(vals[i]) for i in range(len(vals))]
 	samples = [1 for i in range(len(vals))]
-	new_samples = scale_array(varvals,m-sum(samples))
+	new_samples = scale_array([varvals[i]*lengths[i] for i in range(len(vals))],m-sum(samples))
 	for i in range(len(samples)):
 		samples[i] += new_samples[i]
 	return sum([sum([choice(vals[i]) for ii in range(ss)])*len(vals[i])*1.0/ss for i,ss in enumerate(samples)])/sumN
@@ -72,13 +72,15 @@ if the any strata would be oversampled, it clips the samples of that strata to i
 computes the mean by sampling without replacement of thoes strata per thoes allocations
 '''
 def super_castro(vals,m):
+	lengths = [len(v) for v in vals]
 	sumN = sum([len(v) for v in vals])
 	meanvals = [sum(vals[i])*1.0/len(vals[i]) for i in range(len(vals))]
-	varvals = [sum([(vals[i][o]-meanvals[i])**2 for o in range(len(vals[i]))])*1.0/len(vals[i]) for i in range(len(vals))]
+	varvals = [sum([(vals[i][o]-meanvals[i])**2 for o in range(len(vals[i]))])*1.0/len(vals[i]) + 0.00000001 for i in range(len(vals))]
 	samples = [1 for i in range(len(varvals))]
 	allocated = sum(samples)
+
 	while allocated < m:
-		new_samples = scale_array(varvals,m-allocated)
+		new_samples = scale_array([varvals[i]*lengths[i] for i in range(len(vals))],m-allocated)
 		for i in range(len(samples)):
 			if samples[i]+new_samples[i] >= len(vals[i]):
 				varvals[i]=0
@@ -88,9 +90,6 @@ def super_castro(vals,m):
 			samples[i] += additional
 			allocated += additional
 	return sum([sum(vals[i][0:ss])*len(vals[i])*1.0/ss for i,ss in enumerate(samples)])/sumN
-
-
-
 
 
 '''

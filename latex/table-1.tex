@@ -1,0 +1,161 @@
+\begin{figure*}[hbtp]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \caption{$10N$ Samples}
+        \begin{tabular}{m{79mm}}
+			%\STAB{\rotatebox[origin=c]{90}{Absolute error}}  & 
+			\begin{tikzpicture}[scale=0.8]
+				\begin{axis}[
+				boxplot/draw direction=y,
+				x axis line style={opacity=0},
+				y axis line style={opacity=10},
+				tick style={opacity=0},
+				%xticklabel style={opacity=0},
+				axis x line*=bottom,
+				axis y line=left,
+				enlarge y limits,
+				ymajorgrids,
+				xtick={1,2,3,4,5,6,7},
+				xticklabels={
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM*}}}, 
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim-W}}},
+					},
+				]
+\addplot [boxplot prepared={ 	lower whisker=0.0018873442,	lower quartile=0.0054911707,	median=0.0115660651,	upper quartile=0.0201957067,	upper whisker=0.0313351194 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0018479678,	lower quartile=0.0053737763,	median=0.0118668377,	upper quartile=0.0206569562,	upper whisker=0.0317171693 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0021922008,	lower quartile=0.0061725579,	median=0.0129446214,	upper quartile=0.0227833654,	upper whisker=0.0347607822 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0028718562,	lower quartile=0.0079247612,	median=0.0169270709,	upper quartile=0.0295933780,	upper whisker=0.0459081666 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0020786809,	lower quartile=0.0060284247,	median=0.0128084095,	upper quartile=0.0218762979,	upper whisker=0.0335333484 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0024134443,	lower quartile=0.0064584596,	median=0.0137104514,	upper quartile=0.0236670376,	upper whisker=0.0366193152 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0029029450,	lower quartile=0.0081964704,	median=0.0182601656,	upper quartile=0.0317369767,	upper whisker=0.0489318088 }] coordinates {};
+				\end{axis}
+			\end{tikzpicture}
+		\end{tabular}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \caption{$50N$ Samples}
+        \begin{tabular}{m{79mm}}
+			%\STAB{\rotatebox[origin=c]{90}{Absolute error}}  & 
+			\begin{tikzpicture}[scale=0.8]
+				\begin{axis}[
+				boxplot/draw direction=y,
+				x axis line style={opacity=0},
+				y axis line style={opacity=10},
+				tick style={opacity=0},
+				%xticklabel style={opacity=0},
+				axis x line*=bottom,
+				axis y line=left,
+				enlarge y limits,
+				ymajorgrids,
+				xtick={1,2,3,4,5,6,7},
+				xticklabels={
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM*}}}, 
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim-W}}},
+					},
+				]
+\addplot [boxplot prepared={ 	lower whisker=0.0006317745,	lower quartile=0.0017075651,	median=0.0037366819,	upper quartile=0.0066579256,	upper whisker=0.0101485243 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0006254570,	lower quartile=0.0018023616,	median=0.0038633230,	upper quartile=0.0067541034,	upper whisker=0.0101255761 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0007068025,	lower quartile=0.0019893738,	median=0.0041560744,	upper quartile=0.0074129385,	upper whisker=0.0113558155 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0009682683,	lower quartile=0.0028052432,	median=0.0058995027,	upper quartile=0.0101560274,	upper whisker=0.0151640754 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0009266727,	lower quartile=0.0027205398,	median=0.0056726952,	upper quartile=0.0097018076,	upper whisker=0.0149751711 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0010340062,	lower quartile=0.0029374901,	median=0.0061035944,	upper quartile=0.0107265593,	upper whisker=0.0165181205 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0013318739,	lower quartile=0.0037411720,	median=0.0082145154,	upper quartile=0.0141625267,	upper whisker=0.0216969056 }] coordinates {};
+				\end{axis}
+			\end{tikzpicture}
+		\end{tabular}
+    \end{subfigure}
+    ~\\
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \caption{$100N$ Samples}
+        \begin{tabular}{m{79mm}}
+			%\STAB{\rotatebox[origin=c]{90}{Absolute error}}  & 
+			\begin{tikzpicture}[scale=0.8]
+				\begin{axis}[
+				boxplot/draw direction=y,
+				x axis line style={opacity=0},
+				y axis line style={opacity=10},
+				tick style={opacity=0},
+				%xticklabel style={opacity=0},
+				axis x line*=bottom,
+				axis y line=left,
+				enlarge y limits,
+				ymajorgrids,
+				xtick={1,2,3,4,5,6,7},
+				xticklabels={
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM*}}}, 
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim-W}}},
+					},
+				]
+\addplot [boxplot prepared={ 	lower whisker=0.0001280885,	lower quartile=0.0004091609,	median=0.0009608992,	upper quartile=0.0019509338,	upper whisker=0.0034539464 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0001214929,	lower quartile=0.0004127442,	median=0.0010239277,	upper quartile=0.0019695187,	upper whisker=0.0034196308 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0000887940,	lower quartile=0.0003453961,	median=0.0009018108,	upper quartile=0.0018647632,	upper whisker=0.0032042007 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0002323793,	lower quartile=0.0007009104,	median=0.0016518310,	upper quartile=0.0032361165,	upper whisker=0.0055755819 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0006414256,	lower quartile=0.0017828457,	median=0.0037858308,	upper quartile=0.0066402593,	upper whisker=0.0099905951 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0006944519,	lower quartile=0.0019705222,	median=0.0042941941,	upper quartile=0.0074174513,	upper whisker=0.0115165138 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0009351839,	lower quartile=0.0026407413,	median=0.0057360097,	upper quartile=0.0100919555,	upper whisker=0.0157014205 }] coordinates {};
+				\end{axis}
+			\end{tikzpicture}
+		\end{tabular}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \caption{$150N$ Samples}
+        \begin{tabular}{m{79mm}}
+			%\STAB{\rotatebox[origin=c]{90}{Absolute error}}  & 
+			\begin{tikzpicture}[scale=0.8]
+				\begin{axis}[
+				boxplot/draw direction=y,
+				x axis line style={opacity=0},
+				y axis line style={opacity=10},
+				tick style={opacity=0},
+				%xticklabel style={opacity=0},
+				axis x line*=bottom,
+				axis y line=left,
+				enlarge y limits,
+				ymajorgrids,
+				xtick={1,2,3,4,5,6,7},
+				xticklabels={
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM*}}}, 
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{SEBM-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Ney-W}}},
+					\STAB{\rotatebox[origin=c]{90}{\textsc{Sim-W}}},
+					},
+				]
+\addplot [boxplot prepared={ 	lower whisker=0.0000487139,	lower quartile=0.0001863473,	median=0.0005003290,	upper quartile=0.0011015025,	upper whisker=0.002037994 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0000441026,	lower quartile=0.0002008982,	median=0.0005643273,	upper quartile=0.0012115181,	upper whisker=0.0021373138 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0000365317,	lower quartile=0.0001551298,	median=0.0004437645,	upper quartile=0.0009719484,	upper whisker=0.0018915558 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0001207363,	lower quartile=0.0004074072,	median=0.0009602551,	upper quartile=0.0019643373,	upper whisker=0.0035355047 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0006971353,	lower quartile=0.0020289290,	median=0.0043020196,	upper quartile=0.0074356075,	upper whisker=0.0112135668 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0007556367,	lower quartile=0.0020795855,	median=0.0043218693,	upper quartile=0.0075658289,	upper whisker=0.011420641 }] coordinates {};
+\addplot [boxplot prepared={ 	lower whisker=0.0010075904,	lower quartile=0.0027975286,	median=0.0063083297,	upper quartile=0.0109494123,	upper whisker=0.0165960243 }] coordinates {};
+				\end{axis}
+			\end{tikzpicture}
+		\end{tabular}
+    \end{subfigure}
+    \caption{Distribution of numerical absolute errors across 5000 rounds of beta-distributed data, for different methods of stratified sampling. 
+    Each plot shows absolute errors for different numbers of samples multiplied by the number of strata, $N$, e.g. $10N$ samples means that the test problem has a sample budget of ten times the number of strata. The whiskers show the 9th and 91st percentiles, data points outside this range are not shown.}
+\label{Table1}
+\end{figure*}

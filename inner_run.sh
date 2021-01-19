@@ -32,3 +32,9 @@ python compute_error.py ./data_out_SEBM_11250.csv
 python compute_error.py ./data_out_SEBM_22500.csv
 python compute_error.py ./data_out_SEBM_112500.csv
 python compute_error.py ./data_out_SEBM_225000.csv
+echo "appro"
+python compute_error.py ./data_out_approshapley_2250.csv
+python compute_error.py ./data_out_approshapley_11250.csv
+python compute_error.py ./data_out_approshapley_22500.csv
+python compute_error.py ./data_out_approshapley_112500.csv
+python compute_error.py ./data_out_approshapley_225000.csv

@@ -107,7 +107,7 @@ OmegaBig = lambda n,N: (n+1)*(1-n*1.0/N)*1.0/(n**2)
 PsiBig = lambda n,N: (N+1.0-n)/(n**2)
 OmegaSmall = lambda n,N: 1.0/n
 PsiSmall = lambda n,N: 1.0/n
-def burgess_bound(N,ni,Ni,var,d,r):
+def sebm_bound(N,ni,Ni,var,d,r):
 	sumN = sum(Ni)
 	onN = [0 for i in range(2)]
 	max1 = [0 for i in range(2)]
@@ -146,7 +146,7 @@ var = array of floats, the sample variance of each strata as sampled
 d = float, the width of the population datas
 r = float, the confidence level of the bound
 '''
-def burgess_bound_small(N,ni,Ni,var,d,r):
+def sebm_bound_small(N,ni,Ni,var,d,r):
 	sumN = sum(Ni)
 	onN = 0
 	max1 = 0
@@ -180,7 +180,7 @@ var = array of floats, the sample variance of each strata as sampled
 d = float, the width of the population datas
 r = float, the confidence level of the bound
 '''
-def burgess_bound_ideal(N,Ni,ni,var,d):
+def sebm_bound_ideal(N,Ni,ni,var,d):
 	oversumN = 1.0/sum(Ni)
 	v = 0
 	d2 = d*d
@@ -204,7 +204,7 @@ var = array of floats, the sample variance of each strata as sampled
 d = float, the width of the population datas
 r = float, the confidence level of the bound
 '''
-def burgess_bound_ideal_small(N,Ni,ni,var,d):
+def sebm_bound_ideal_small(N,Ni,ni,var,d):
 	oversumN = 1.0/sum(Ni)
 	v = 0
 	d2 = d*d
@@ -220,7 +220,7 @@ def burgess_bound_ideal_small(N,Ni,ni,var,d):
 The SEBM* method without replacement:
 calculates the variance of the strata, and then iteratively allocates the budget to iteratively minimise SEBB*
 '''
-def burgess_ideal(vals,m,d):
+def sebm_ideal(vals,m,d):
 	Ni = [len(v) for v in vals]
 	N = len(Ni)
 	ni = [1 for i in range(N)]
@@ -233,7 +233,7 @@ def burgess_ideal(vals,m,d):
 		for i in range(N):
 			if ni[i]<Ni[i]:
 				ni[i] += 1
-				adv = burgess_bound_ideal(N,Ni,ni,var,d)
+				adv = sebm_bound_ideal(N,Ni,ni,var,d)
 				ni[i] -= 1
 				if adv<min_advantage:
 					min_advantage = adv
@@ -246,7 +246,7 @@ def burgess_ideal(vals,m,d):
 The SEBM* method with replacement:
 calculates the variance of the strata, and then iteratively allocates the budget to iteratively minimise SEBB*
 '''
-def burgess_ideal_small(vals,m,d):
+def sebm_ideal_small(vals,m,d):
 	Ni = [len(v) for v in vals]
 	N = len(Ni)
 	ni = [1 for i in range(N)]
@@ -258,7 +258,7 @@ def burgess_ideal_small(vals,m,d):
 		min_advantage = float('inf')
 		for i in range(N):
 			ni[i] += 1
-			adv = burgess_bound_ideal_small(N,Ni,ni,var,d)
+			adv = sebm_bound_ideal_small(N,Ni,ni,var,d)
 			ni[i] -= 1
 			if adv<min_advantage:
 				min_advantage = adv
@@ -274,7 +274,7 @@ def burgess_ideal_small(vals,m,d):
 The SEBM method with replacement:
 calculates the variance of the strata, and then iteratively allocates the budget to iteratively minimise SEBB
 '''
-def burgess(vals,m,d,r=0.5):
+def sebm(vals,m,d,r=0.5):
 	Ni = [len(v) for v in vals]
 	N = len(Ni)
 	ni = [0 for i in range(N)]
@@ -296,12 +296,12 @@ def burgess(vals,m,d,r=0.5):
 	advantage = [0.0 for i in range(N)]
 	while samples < m:
 		#calculate the bound as it exists:
-		bound = burgess_bound(N,ni,Ni,var,d,r)
+		bound = sebm_bound(N,ni,Ni,var,d,r)
 		#calculate the advantages possible
 		for i in range(N):
 			if ni[i]<Ni[i] or Ni[i]==-1:
 				ni[i]+=1
-				advantage[i] = bound-burgess_bound(N,ni,Ni,var,d,r)
+				advantage[i] = bound-sebm_bound(N,ni,Ni,var,d,r)
 				ni[i]-=1
 			else:
 				advantage[i]=-float("inf")
@@ -331,7 +331,7 @@ def burgess(vals,m,d,r=0.5):
 The SEBM method without replacement:
 calculates the variance of the strata, and then iteratively allocates the budget to iteratively minimise SEBB
 '''
-def burgess_small(vals,m,d,r=0.5):
+def sebm_small(vals,m,d,r=0.5):
 	Ni = [len(v) for v in vals]
 	N = len(Ni)
 	ni = [0 for i in range(N)]
@@ -352,11 +352,11 @@ def burgess_small(vals,m,d,r=0.5):
 	advantage = [0.0 for i in range(N)]
 	while samples < m:
 		#calculate the bound as it exists:
-		bound = burgess_bound_small(N,ni,Ni,var,d,r)
+		bound = sebm_bound_small(N,ni,Ni,var,d,r)
 		#calculate the advantages possible
 		for i in range(N):
 			ni[i]+=1
-			advantage[i] = bound-burgess_bound_small(N,ni,Ni,var,d,r)
+			advantage[i] = bound-sebm_bound_small(N,ni,Ni,var,d,r)
 			ni[i]-=1
 		#detect the sample that maximises advantage
 		maxi=0

@@ -250,7 +250,7 @@ OmegaBig = lambda n,N: (n+1)*(1-n*1.0/N)*1.0/(n**2)
 PsiBig = lambda n,N: (N+1.0-n)/(n**2)
 OmegaSmall = lambda n,N: 1.0/n
 PsiSmall = lambda n,N: 1.0/n
-def burgess_bound(N,ni,Ni,var,d,r):
+def sebm_bound(N,ni,Ni,var,d,r):
 	onN = [[0 for i in range(N)] for i in range(2)]
 	max1 = [[0 for i in range(N)] for i in range(2)]
 	var1 = [[0 for i in range(N)] for i in range(2)]
@@ -283,7 +283,7 @@ def burgess_bound(N,ni,Ni,var,d,r):
 	return sum([min(A[0][i],A[1][i]) for i in range(N)])
 
 
-def burgess(N,m,v,d,r=0.5):
+def sebm(N,m,v,d,r=0.5):
 	ni = [[0 for i in range(N)] for i in range(N)]
 	Ni = [factorial(N-1)/(factorial(N-1-i)*factorial(i)) for i in range(N)]
 	listsi = [[] for i in range(N)]
@@ -306,13 +306,13 @@ def burgess(N,m,v,d,r=0.5):
 	advantage = [[0.0 for i in range(N)] for i in range(N)]
 	while samples < m:
 		#calculate the bound as it exists:
-		bound = burgess_bound(N,ni,Ni,var,d,r)
+		bound = sebm_bound(N,ni,Ni,var,d,r)
 		#calculate the advantages possible
 		for i in range(N):
 			for o in range(N):
 				if ni[i][o]<Ni[o] or Ni[o]==-1:
 					ni[i][o]+=1
-					advantage[i][o] = bound-burgess_bound(N,ni,Ni,var,d,r)
+					advantage[i][o] = bound-sebm_bound(N,ni,Ni,var,d,r)
 					ni[i][o]-=1
 				else:
 					advantage[i][o]=0

@@ -184,7 +184,7 @@ double* onN;
 double* max1;
 double* var1;
 double* d1;
-inline double burgess_bound(int N, long* ni, long* Ni, double* var, double d, double r) {
+inline double sebm_bound(int N, long* ni, long* Ni, double* var, double d, double r) {
 	for (int i=0; i<N*2; i++) {
 		onN[i] = 0;
 		max1[i] = 0;
@@ -246,7 +246,7 @@ inline double burgess_bound(int N, long* ni, long* Ni, double* var, double d, do
 // m is the sample budget
 // d is the data width
 // r is the confidence level
-double* burgess(int N, int m, double d, double r) {
+double* sebm(int N, int m, double d, double r) {
 	long* ni = (long*)calloc(sizeof(long),N*N);
 	long* Ni = (long*)calloc(sizeof(long),N);
 	for (int i=0; i<N; i++) {
@@ -282,13 +282,13 @@ double* burgess(int N, int m, double d, double r) {
 	}
 	while (samples < m) {
 		//calculate the bound as it exists:
-		bound = burgess_bound(N,ni,Ni,var,d,r);
+		bound = sebm_bound(N,ni,Ni,var,d,r);
 		//calculate the advantages possible
 		for (int i=0; i<N; i++) {
 			for (int o=0; o<N; o++) {
 				if (ni[i*N+o]<Ni[o]) {
 					ni[i*N+o]+=1;
-					advantage[i*N+o] = bound-burgess_bound(N,ni,Ni,var,d,r);
+					advantage[i*N+o] = bound-sebm_bound(N,ni,Ni,var,d,r);
 					ni[i*N+o]-=1;
 					//advantage[i*N+o] = 1.0/ni[i*N+o];
 				} else {
@@ -347,7 +347,7 @@ double* burgess(int N, int m, double d, double r) {
 void file_output_data() {
 	char* filename;
 	filename = (char*)calloc(sizeof(char),150);
-	sprintf(filename, "data_out_Burgess_%i.csv", m);
+	sprintf(filename, "data_out_SEBM_%i.csv", m);
 	FILE* f = fopen(filename,"w");
 	free(filename);
 	
@@ -393,7 +393,7 @@ void loop() {
 	while (*command != -1) {
 		if ((*state == 0) && (*command == 1)) {
 			*state = 1;
-			double* v = burgess(N, m, d, r);
+			double* v = sebm(N, m, d, r);
 			for (int i=0; i<N; i++) {
 				resultspace[child*N+i] = v[i];
 			}

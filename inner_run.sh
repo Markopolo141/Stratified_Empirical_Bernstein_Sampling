@@ -27,8 +27,8 @@ python compute_error.py ./data_out_castro_22500.csv
 python compute_error.py ./data_out_castro_112500.csv
 python compute_error.py ./data_out_castro_225000.csv
 echo "sebm"
-python compute_error.py ./data_out_Burgess_2250.csv
-python compute_error.py ./data_out_Burgess_11250.csv
-python compute_error.py ./data_out_Burgess_22500.csv
-python compute_error.py ./data_out_Burgess_112500.csv
-python compute_error.py ./data_out_Burgess_225000.csv
+python compute_error.py ./data_out_SEBM_2250.csv
+python compute_error.py ./data_out_SEBM_11250.csv
+python compute_error.py ./data_out_SEBM_22500.csv
+python compute_error.py ./data_out_SEBM_112500.csv
+python compute_error.py ./data_out_SEBM_225000.csv

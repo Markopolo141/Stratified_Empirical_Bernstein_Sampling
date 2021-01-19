@@ -53,11 +53,11 @@ with open("Bernoulli_and_Uniform.csv","w") as f:
 			
 			#calculate error achieved using SEBM*
 			cvals = copy(vals)
-			error_values[0].append(abs(mean-burgess_ideal(cvals,m,d)))
+			error_values[0].append(abs(mean-sebm_ideal(cvals,m,d)))
 
 			#calculate error achieved using SEBM
 			cvals = copy(vals)
-			error_values[1].append(abs(mean-burgess(cvals,m,d)))
+			error_values[1].append(abs(mean-sebm(cvals,m,d)))
 
 			#calculate error achieved using Neyman sampling
 			cvals = copy(vals)

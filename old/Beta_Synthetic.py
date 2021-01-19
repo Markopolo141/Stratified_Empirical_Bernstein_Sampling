@@ -59,15 +59,15 @@ with open("Beta_Synthetic.csv","w") as f:
 
 			#calculate error in using SEBM* method
 			cvals = copy(vals)
-			sampling_errors[0].append(abs(mean-burgess_ideal(cvals,m,d)))
+			sampling_errors[0].append(abs(mean-sebm_ideal(cvals,m,d)))
 
 			#calculate error in using SEBM method
 			cvals = copy(vals)
-			sampling_errors[1].append(abs(mean-burgess(cvals,m,d)))
+			sampling_errors[1].append(abs(mean-sebm(cvals,m,d)))
 
 			#calculate error in using SEBM method with replacement
 			cvals = copy(vals)
-			sampling_errors[2].append(abs(mean-burgess_small(cvals,m,d)))
+			sampling_errors[2].append(abs(mean-sebm_small(cvals,m,d)))
 
 			#calculate error in using simple sampling method without replacement
 			cvals = copy(vals)
